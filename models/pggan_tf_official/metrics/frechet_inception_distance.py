@@ -39,7 +39,7 @@ import numpy as np
 import scipy as sp
 import os
 import gzip, pickle
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from scipy.misc import imread
 import pathlib
 import urllib

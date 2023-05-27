@@ -6,7 +6,7 @@
 # Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 import tfutil
 

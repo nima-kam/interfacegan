@@ -68,7 +68,7 @@ class StyleGANGenerator(BaseGenerator):
   def convert_tf_model(self, test_num=10):
     import sys
     import pickle
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
     sys.path.append(model_settings.BASE_DIR + '/stylegan_tf_official')
 
