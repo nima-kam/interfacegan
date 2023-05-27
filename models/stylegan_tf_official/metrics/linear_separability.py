@@ -10,7 +10,7 @@
 from collections import defaultdict
 import numpy as np
 import sklearn.svm
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import dnnlib.tflib as tflib
 
 from metrics import metric_base

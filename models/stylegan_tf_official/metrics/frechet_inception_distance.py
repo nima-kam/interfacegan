@@ -10,7 +10,7 @@
 import os
 import numpy as np
 import scipy
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import dnnlib.tflib as tflib
 
 from metrics import metric_base
