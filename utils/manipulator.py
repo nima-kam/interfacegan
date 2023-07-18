@@ -11,7 +11,7 @@ __all__ = ['train_boundary', 'project_boundary', 'linear_interpolate']
 
 def train_boundary(latent_codes,
                    scores,
-                   chosen_num_or_ratio=0.02,
+                   chosen_num_or_ratio=0.2,
                    split_ratio=0.7,
                    invalid_value=None,
                    logger=None):
@@ -32,7 +32,7 @@ def train_boundary(latent_codes,
     chosen_num_or_ratio: How many samples will be chosen as positive (negative)
       samples. If this field lies in range (0, 0.5], `chosen_num_or_ratio *
       latent_codes_num` will be used. Otherwise, `min(chosen_num_or_ratio,
-      0.5 * latent_codes_num)` will be used. (default: 0.02)
+      0.5 * latent_codes_num)` will be used. (default: 0.2)
     split_ratio: Ratio to split training and validation sets. (default: 0.7)
     invalid_value: This field is used to filter out data. (default: None)
     logger: Logger for recording log messages. If set as `None`, a default
