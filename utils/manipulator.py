@@ -116,7 +116,7 @@ def train_boundary(latent_codes,
               f'{remaining_negative_num} negative.')
 
   logger.info(f'Training boundary.')
-  clf = svm.SVC(kernel='linear')
+  clf = svm.LinearSVC(loss='hinge')
   classifier = clf.fit(train_data, train_label)
   logger.info(f'Finish training.')
 
