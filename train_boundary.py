@@ -27,7 +27,7 @@ def parse_args():
                       help='Path to the input latent codes. (required)')
   parser.add_argument('-s', '--scores_path', type=str, required=True,
                       help='Path to the input attribute scores. (required)')
-  parser.add_argument('-n', '--chosen_num_or_ratio', type=float, default=0.02,
+  parser.add_argument('-n', '--chosen_num_or_ratio', type=float, default=0.7,
                       help='How many samples to choose for training. '
                            '(default: 0.2)')
   parser.add_argument('-r', '--split_ratio', type=float, default=0.7,

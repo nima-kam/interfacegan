@@ -95,20 +95,20 @@ def train_boundary(latent_codes,
   negative_val = latent_codes[-chosen_num:][negative_idx[train_num:]]
   # Training set.
   train_data = np.concatenate([positive_train, negative_train], axis=0)
-  train_label = np.concatenate([np.ones(train_num, dtype=np.int),
-                                np.zeros(train_num, dtype=np.int)], axis=0)
+  train_label = np.concatenate([np.ones(train_num, dtype=np.int32),
+                                np.zeros(train_num, dtype=np.int32)], axis=0)
   logger.info(f'  Training: {train_num} positive, {train_num} negative.')
   # Validation set.
   val_data = np.concatenate([positive_val, negative_val], axis=0)
-  val_label = np.concatenate([np.ones(val_num, dtype=np.int),
-                              np.zeros(val_num, dtype=np.int)], axis=0)
+  val_label = np.concatenate([np.ones(val_num, dtype=np.int32),
+                              np.zeros(val_num, dtype=np.int32)], axis=0)
   logger.info(f'  Validation: {val_num} positive, {val_num} negative.')
   # Remaining set.
   remaining_num = num_samples - chosen_num * 2
   remaining_data = latent_codes[chosen_num:-chosen_num]
   remaining_scores = scores[chosen_num:-chosen_num]
   decision_value = (scores[0] + scores[-1]) / 2
-  remaining_label = np.ones(remaining_num, dtype=np.int)
+  remaining_label = np.ones(remaining_num, dtype=np.int32)
   remaining_label[remaining_scores.ravel() < decision_value] = 0
   remaining_positive_num = np.sum(remaining_label == 1)
   remaining_negative_num = np.sum(remaining_label == 0)
