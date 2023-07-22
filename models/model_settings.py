@@ -59,6 +59,20 @@ MODEL_POOL = {
         'channel_order': 'RGB',
         'fused_scale': 'auto',
     },
+    'stylegan2_ffhq': {
+        # 'tf_model_path': MODEL_DIR + '/karras2019stylegan-ffhq-1024x1024.pkl',
+        'model_path': MODEL_DIR + '/stylegan2_ffhq.pth',
+        'gan_type': 'stylegan',
+        'dataset_name': 'ffhq',
+        'latent_space_dim': 512,
+        'w_space_dim': 512,
+        'resolution': 1024,
+        'min_val': -1.0,
+        'max_val': 1.0,
+        'output_channels': 3,
+        'channel_order': 'RGB',
+        'fused_scale': 'auto',
+    },
 }
 
 # Settings for StyleGAN.
