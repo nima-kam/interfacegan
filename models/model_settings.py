@@ -62,7 +62,7 @@ MODEL_POOL = {
     'stylegan2_ffhq': {
         # 'tf_model_path': MODEL_DIR + '/karras2019stylegan-ffhq-1024x1024.pkl',
         'model_path': MODEL_DIR + '/stylegan2_ffhq.pth',
-        'gan_type': 'stylegan',
+        'gan_type': 'stylegan2',
         'dataset_name': 'ffhq',
         'latent_space_dim': 512,
         'w_space_dim': 512,
