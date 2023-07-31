@@ -28,7 +28,7 @@ class StyleGAN2Generator(BaseGenerator):
     self.truncation_psi = model_settings.STYLEGAN_TRUNCATION_PSI
     self.truncation_layers = model_settings.STYLEGAN_TRUNCATION_LAYERS
     self.randomize_noise = model_settings.STYLEGAN_RANDOMIZE_NOISE
-    # self.model_specific_vars = ['truncation.truncation']
+    self.model_specific_vars = []
     super().__init__(model_name, logger)
     self.num_layers = (int(np.log2(self.resolution)) - 1) * 2
     assert self.gan_type == 'stylegan2'
