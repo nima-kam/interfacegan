@@ -48,7 +48,7 @@ class StyleGAN2Generator(BaseGenerator):
 
   def load(self):
     self.logger.info(f'Loading pytorch model from `{self.model_path}`.')
-    state_dict = torch.load(self.model_path)
+    state_dict = torch.load(self.model_path)['model']
     for var_name in self.model_specific_vars:
       state_dict[var_name] = self.model.state_dict()[var_name]
     self.model.load_state_dict(state_dict)
