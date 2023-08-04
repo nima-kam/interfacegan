@@ -187,17 +187,18 @@ class StyleGAN2Generator(BaseGenerator):
       # else:
       #     latent = ws
 
-      trunc_psi = 1.0 if trunc_psi is None else trunc_psi
-      trunc_layers = 0 if trunc_layers is None else trunc_layers
+
+      trunc_psi = 1.0 if self.truncation_psi is None else self.truncation_psi
+      trunc_layers = 0 if self.truncation_layers is None else self.truncation_layers
       if trunc_psi < 1.0 and trunc_layers > 0:
           w_avg = self.model.w_avg.reshape(1, -1, self.w_dim)[:, :trunc_layers]
           wp[:, :trunc_layers] = w_avg.lerp(
               wp[:, :trunc_layers], trunc_psi)
 
-      synthesis_results = self.model.synthesis(wp,                                               
-                                           noise_mode=self.randomize_noise,                                           
-                                           impl=self.run_device,
-                                           )
+      # synthesis_results = self.model.synthesis(wp,                                               
+      #                                      noise_mode=self.randomize_noise,                                           
+      #                                      impl=self.run_device,
+      #                                      )
 
       results['z'] = latent_codes
       results['w'] = self.get_value(ws)
