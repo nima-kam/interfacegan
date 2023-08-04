@@ -181,17 +181,11 @@ class StyleGAN2Generator(BaseGenerator):
       ws = mapping_results['w']
       wp = mapping_results.pop('wp')
       
-      # inject_index = self.num_layers
-      # if ws.ndim < 4:
-      #     latent = ws.unsqueeze(1).repeat(1, inject_index, 1)
-      # else:
-      #     latent = ws
-
 
       trunc_psi = 1.0 if self.truncation_psi is None else self.truncation_psi
       trunc_layers = 0 if self.truncation_layers is None else self.truncation_layers
       if trunc_psi < 1.0 and trunc_layers > 0:
-          w_avg = self.model.w_avg.reshape(1, -1, self.w_dim)[:, :trunc_layers]
+          w_avg = self.model.w_avg.reshape(1, -1, self.w_space_dim)[:, :trunc_layers]
           wp[:, :trunc_layers] = w_avg.lerp(
               wp[:, :trunc_layers], trunc_psi)
 
