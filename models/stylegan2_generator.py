@@ -48,13 +48,16 @@ class StyleGAN2Generator(BaseGenerator):
 
   def load(self):
     self.logger.info(f'Loading pytorch model from `{self.model_path}`.')
-    state_dict = torch.load(self.model_path)['model']
+    
+    
+    state_dict = torch.load(self.model_path)['models']['generator']
+    print('gan model spec type:\n',[a for a in self.model.state_dict().keys() if a not in state_dict.keys()])
     for var_name in self.model_specific_vars:
       state_dict[var_name] = self.model.state_dict()[var_name]
     self.model.load_state_dict(state_dict)
     self.logger.info(f'Successfully loaded!')
-    self.lod = self.model.synthesis.lod.to(self.cpu_device).tolist()
-    self.logger.info(f'  `lod` of the loaded model is {self.lod}.')
+    # self.lod = self.model.synthesis.lod.to(self.cpu_device).tolist()
+    # self.logger.info(f'  `lod` of the loaded model is {self.lod}.')
 
 
   def sample(self, num, latent_space_type='Z'):
