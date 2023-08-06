@@ -211,7 +211,7 @@ class StyleGAN2Generator(BaseGenerator):
 
     results['wp'] = self.get_value(wp)
     synthesis_results = self.model.synthesis(wp,                                               
-                                           noise_mode=self.randomize_noise,                                           
+                                           noise_mode='none' if self.randomize_noise else 'const',                                           
                                            impl=self.run_device,
                                            )
     
