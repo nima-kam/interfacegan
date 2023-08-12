@@ -120,6 +120,12 @@ def train_boundary(latent_codes,
   classifier = clf.fit(train_data, train_label)
   logger.info(f'Finish training.')
 
+  train_prediction = classifier.predict(train_data)
+  correct_num = np.sum(train_label == train_prediction)
+  logger.info(f'Accuracy for train set: '
+              f'{correct_num} / {train_num * 2} = '
+              f'{correct_num / (train_num * 2):.6f}')
+
   if val_num:
     val_prediction = classifier.predict(val_data)
     correct_num = np.sum(val_label == val_prediction)
