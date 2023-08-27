@@ -81,8 +81,12 @@ class StyleGAN2Generator(BaseGenerator):
       latent_codes = latent_codes / norm * np.sqrt(self.latent_space_dim)
     elif latent_space_type == 'W':
       latent_codes = np.random.randn(num, self.w_space_dim)
+      mapping_results = self.model.mapping(latent_codes, impl=self.run_device)
+      latent_codes = mapping_results['w']
     elif latent_space_type == 'WP':
       latent_codes = np.random.randn(num, self.num_layers, self.w_space_dim)
+      mapping_results = self.model.mapping(latent_codes, impl=self.run_device)
+      latent_codes = mapping_results['wp']
     else:
       raise ValueError(f'Latent space type `{latent_space_type}` is invalid!')
 
