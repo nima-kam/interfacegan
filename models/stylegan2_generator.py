@@ -204,10 +204,11 @@ class StyleGAN2Generator(BaseGenerator):
       # inject_index = self.num_layers
       ws = torch.from_numpy(latent_codes).type(torch.FloatTensor)
       ws = ws.to(self.run_device)
-      wp = latent_codes.unsqueeze(1).repeat((1, self.num_outputs, 1))
+      wp = ws.unsqueeze(1).repeat((1, self.num_outputs, 1))
       results['w'] = self.get_value(ws)
     # # Generate from W+ space.
-    # elif latent_space_type == 'WP':
+    elif latent_space_type == 'WP':
+      wp=torch.from_numpy(latent_codes).type(torch.FloatTensor)
 
     results['wp'] = self.get_value(wp)
     synthesis_results = self.model.synthesis(wp,                                               
@@ -215,20 +216,8 @@ class StyleGAN2Generator(BaseGenerator):
                                            impl=self.run_device,
                                            )
     
-    # out = self.input(wp)
-    # out = self.conv1(out, wp[:, 0], noise=noise[0])
-
-    # skip = self.to_rgb1(out, latent[:, 1])
-
-    # i = 1
-    # for conv1, conv2, noise1, noise2, to_rgb in zip(
-    #         self.convs[::2], self.convs[1::2], noise[1::2], noise[2::2], self.to_rgbs
-    # ):
-    #     out = conv1(out, latent[:, i], noise=noise1)
-    #     out = conv2(out, latent[:, i + 1], noise=noise2)
-    #     skip = to_rgb(out, latent[:, i + 2], skip)
-
-    #     i += 2
+    
+    
 
     images = synthesis_results['image']
 
@@ -240,34 +229,3 @@ class StyleGAN2Generator(BaseGenerator):
     return results
   
 
-# class TruncationModule(nn.Module):
-#   """Implements the truncation module used in StyleGAN."""
-
-#   def __init__(self,
-#                resolution=1024,
-#                w_space_dim=512,
-#                truncation_psi=0.7,
-#                truncation_layers=8):
-#     super().__init__()
-
-#     self.num_layers = int(np.log2(resolution)) * 2 - 2
-#     self.w_space_dim = w_space_dim
-#     if truncation_psi is not None and truncation_layers is not None:
-#       self.use_truncation = True
-#     else:
-#       self.use_truncation = False
-#       truncation_psi = 1.0
-#       truncation_layers = 0
-#     self.register_buffer('w_avg', torch.zeros(w_space_dim))
-#     layer_idx = np.arange(self.num_layers).reshape(1, self.num_layers, 1)
-#     coefs = np.ones_like(layer_idx, dtype=np.float32)
-#     coefs[layer_idx < truncation_layers] *= truncation_psi
-#     self.register_buffer('truncation', torch.from_numpy(coefs))
-
-#   def forward(self, w):
-#     if len(w.shape) == 2:
-#       w = w.view(-1, 1, self.w_space_dim).repeat(1, self.num_layers, 1)
-#     if self.use_truncation:
-#       w_avg = self.w_avg.view(1, 1, self.w_space_dim)
-#       w = w_avg + (w - w_avg) * self.truncation
-#     return w
