@@ -80,11 +80,15 @@ class StyleGAN2Generator(BaseGenerator):
       norm = np.linalg.norm(latent_codes, axis=1, keepdims=True)
       latent_codes = latent_codes / norm * np.sqrt(self.latent_space_dim)
     elif latent_space_type == 'W':
-      latent_codes = np.random.randn(num, self.w_space_dim)
+      latent_codes = np.random.randn(num, self.w_space_dim)      
+      norm = np.linalg.norm(latent_codes, axis=1, keepdims=True)
+      latent_codes = latent_codes / norm * np.sqrt(self.latent_space_dim)
       mapping_results = self.model.mapping(latent_codes, impl=self.run_device)
       latent_codes = mapping_results['w']
     elif latent_space_type == 'WP':
-      latent_codes = np.random.randn(num, self.num_layers, self.w_space_dim)
+      latent_codes = np.random.randn(num, self.num_layers, self.w_space_dim)      
+      norm = np.linalg.norm(latent_codes, axis=1, keepdims=True)
+      latent_codes = latent_codes / norm * np.sqrt(self.latent_space_dim)
       mapping_results = self.model.mapping(latent_codes, impl=self.run_device)
       latent_codes = mapping_results['wp']
     else:
@@ -209,6 +213,13 @@ class StyleGAN2Generator(BaseGenerator):
       ws = torch.from_numpy(latent_codes).type(torch.FloatTensor)
       ws = ws.to(self.run_device)
       wp = ws.unsqueeze(1).repeat((1, self.num_layers, 1))
+      trunc_psi = 1.0 if self.truncation_psi is None else self.truncation_psi
+      trunc_layers = 0 if self.truncation_layers is None else self.truncation_layers
+      if trunc_psi < 1.0 and trunc_layers > 0:
+          w_avg = self.model.w_avg.reshape(1, -1, self.w_space_dim)[:, :trunc_layers]
+          wp[:, :trunc_layers] = w_avg.lerp(
+              wp[:, :trunc_layers], trunc_psi)
+          
       results['w'] = self.get_value(ws)
     # # Generate from W+ space.
     elif latent_space_type == 'WP':
