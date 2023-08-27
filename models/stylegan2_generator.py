@@ -204,7 +204,7 @@ class StyleGAN2Generator(BaseGenerator):
       # inject_index = self.num_layers
       ws = torch.from_numpy(latent_codes).type(torch.FloatTensor)
       ws = ws.to(self.run_device)
-      wp = ws.unsqueeze(1).repeat((1, self.num_outputs, 1))
+      wp = ws.unsqueeze(1).repeat((1, self.num_layers, 1))
       results['w'] = self.get_value(ws)
     # # Generate from W+ space.
     elif latent_space_type == 'WP':
