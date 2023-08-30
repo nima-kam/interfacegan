@@ -217,7 +217,8 @@ class StyleGAN2Generator(BaseGenerator):
       results['w'] = self.get_value(ws)
     # # Generate from W+ space.
     elif latent_space_type == 'WP':
-      wp=torch.from_numpy(latent_codes).type(torch.FloatTensor)
+      wp = torch.from_numpy(latent_codes).type(torch.FloatTensor)
+      wp = wp.to(self.run_device)
       trunc_psi = 1.0 if self.truncation_psi is None else self.truncation_psi
       trunc_layers = 0 if self.truncation_layers is None else self.truncation_layers
       if trunc_psi < 1.0 and trunc_layers > 0:
