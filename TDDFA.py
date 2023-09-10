@@ -10,7 +10,8 @@ import torch
 from torchvision.transforms import Compose
 import torch.backends.cudnn as cudnn
 
-import models
+import models ,models.mobilenet_v1 as mobilenet1
+
 from bfm import BFMModel
 from utils.io import _load
 from utils.functions import (
@@ -48,7 +49,7 @@ class TDDFA(object):
         )
 
         # load model, default output is dimension with length 62 = 12(pose) + 40(shape) +10(expression)
-        model = getattr(models.mobilenet_v1, kvs.get('arch'))(
+        model = getattr(mobilenet1, kvs.get('arch'))(
             num_classes=kvs.get('num_params', 62),
             widen_factor=kvs.get('widen_factor', 1),
             size=self.size,
