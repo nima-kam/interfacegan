@@ -5,9 +5,9 @@ from collections import OrderedDict
 import numpy as np
 
 
-PNET_PATH = r'C:\Users\MH1998\Desktop\id\models\mtcnn\mtcnn_pytorch\src\weights\pnet.npy'
-ONET_PATH = r'C:\Users\MH1998\Desktop\id\models\mtcnn\mtcnn_pytorch\src\weights\onet.npy'
-RNET_PATH = r'C:\Users\MH1998\Desktop\id\models\mtcnn\mtcnn_pytorch\src\weights\rnet.npy'
+PNET_PATH = r'.\models\mtcnn\mtcnn_pytorch\src\weights\pnet.npy'
+ONET_PATH = r'.\models\mtcnn\mtcnn_pytorch\src\weights\onet.npy'
+RNET_PATH = r'.\models\mtcnn\mtcnn_pytorch\src\weights\rnet.npy'
 
 
 class Flatten(nn.Module):
